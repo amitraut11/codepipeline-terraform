@@ -3,7 +3,7 @@ resource "aws_s3_bucket" "codepipeline_artifacts" {
   acl    = "private"
 } 
 
-resource "aws_s3_bucket" "codepipeline_artifacts" {
+resource "aws_s3_bucket" "codepipeline_artifacts-new" {
   bucket = "pipeline-artifacts-davo-amit-new-terraform"
   acl    = "private"
 } 
