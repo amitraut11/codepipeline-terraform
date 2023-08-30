@@ -63,7 +63,7 @@ source {
 
   environment {
     compute_type = "BUILD_GENERAL1_SMALL"
-    image        = "aws/codebuild/standard:4.0"  # Docker image with Terraform and other tools
+    image        = "aws/codebuild/standard:5.0"  # Docker image with Terraform and other tools
     type         = "LINUX_CONTAINER"
     #image_pull_credentials_type = "SERVICE_ROLE"
     environment_variable {
