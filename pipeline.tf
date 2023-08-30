@@ -49,8 +49,8 @@ resource "aws_codebuild_project" "tf-apply" {
 }
 
 
-resource "aws_codebuild_project" "source-code-image" {
-  name          = "source-code-image"
+resource "aws_codebuild_project" "tf-image" {
+  name          = "tf-cicd-image"
   description   = "Generate image from source code"
   service_role  = aws_iam_role.tf-codebuild-role-terraform.arn
 
