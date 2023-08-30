@@ -68,9 +68,9 @@ source {
     
     environment_variable {
       name  = "DOCKER_REPO"
-      value = "your-docker-repo-url"  # Replace with your Docker repository URL
+      value = "https://hub.docker.com/u/amitraut11"  # Replace with your Docker repository URL
     }
-     registry_credential{
+    registry_credential{
         credential = var.dockerhub_credentials
         credential_provider = "SECRETS_MANAGER"
     }
