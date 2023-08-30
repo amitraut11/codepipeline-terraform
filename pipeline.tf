@@ -49,38 +49,37 @@ resource "aws_codebuild_project" "tf-apply" {
 }
 
 
+
 resource "aws_codebuild_project" "tf-image" {
-  name          = "tf-cicd-image"
-  description   = "Generate image from source code"
+  name          = "tf-image"
+  description   = "Builds a Docker image and pushes it to ECR"
+  build_timeout = 60
   service_role  = aws_iam_role.tf-codebuild-role-terraform.arn
 
-  artifacts {
-    type = "NO_ARTIFACTS"
-  }
-
-  environment {
-    compute_type                = "BUILD_GENERAL1_SMALL"
-    image                       = "aws/codebuild/standard:5.0"
-    type                        = "LINUX_CONTAINER"
-    image_pull_credentials_type = "SERVICE_ROLE" 
-    AWS_DEFAULT_REGION = "us-east-1"
-    AWS_ACCOUNT_ID = "365235792173"
-    IMAGE_REPO_NAME = "helloworld"
-    IMAGE_TAG = "latest"
-   
-     
-    registry_credential{
-        credential = var.dockerhub_credentials
-        credential_provider = "SECRETS_MANAGER"
-    }
- }
- source {
+source {
      type   = "CODEPIPELINE"
      buildspec = file("image-buildspec.yml")
  }
+
+  environment {
+    compute_type = "BUILD_GENERAL1_SMALL"
+    image        = "aws/codebuild/standard:4.0"  # Docker image with Terraform and other tools
+    type         = "LINUX_CONTAINER"
+    
+    environment_variable {
+      name  = "DOCKER_REPO"
+      value = "your-docker-repo-url"  # Replace with your Docker repository URL
+    }
+     registry_credential{
+        credential = var.dockerhub_credentials
+        credential_provider = "SECRETS_MANAGER"
+    }
+  }
+
+  artifacts {
+    type = "CODEPIPELINE"
+  }
 }
-
-
 
 resource "aws_codepipeline" "cicd_pipeline" {
 
