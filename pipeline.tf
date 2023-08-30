@@ -64,11 +64,11 @@ resource "aws_codebuild_project" "tf-image" {
     type                        = "LINUX_CONTAINER"
     image_pull_credentials_type = "SERVICE_ROLE" 
     AWS_DEFAULT_REGION = "us-east-1"
-        AWS_ACCOUNT_ID = "365235792173"
-        IMAGE_REPO_NAME = "helloworld"
-        IMAGE_TAG = "latest"
+    AWS_ACCOUNT_ID = "365235792173"
+    IMAGE_REPO_NAME = "helloworld"
+    IMAGE_TAG = "latest"
    
-    
+     
     registry_credential{
         credential = var.dockerhub_credentials
         credential_provider = "SECRETS_MANAGER"
