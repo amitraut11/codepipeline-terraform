@@ -49,6 +49,33 @@ resource "aws_codebuild_project" "tf-apply" {
 }
 
 
+resource "aws_codebuild_project" "source-code-image" {
+  name          = "source-code-image"
+  description   = "Generate image from source code"
+  service_role  = aws_iam_role.tf-codebuild-role-terraform.arn
+
+  artifacts {
+    type = "CODEPIPELINE"
+  }
+
+  environment {
+    compute_type                = "BUILD_GENERAL1_SMALL"
+    image                       = "hashicorp/terraform:1.4.4"
+    type                        = "LINUX_CONTAINER"
+    image_pull_credentials_type = "SERVICE_ROLE"
+    registry_credential{
+        credential = var.dockerhub_credentials
+        credential_provider = "SECRETS_MANAGER"
+    }
+ }
+ source {
+     type   = "CODEPIPELINE"
+     buildspec = file("app/image-buildspec.yml")
+ }
+}
+
+
+
 resource "aws_codepipeline" "cicd_pipeline" {
 
     name = "tf-cicd"
@@ -103,6 +130,21 @@ resource "aws_codepipeline" "cicd_pipeline" {
             input_artifacts = ["tf-code"]
             configuration = {
                 ProjectName = "tf-cicd-apply"
+            }
+        }
+    }
+
+     stage {
+        name ="Image"
+        action{
+            name = "Image"
+            category = "Build"
+            provider = "CodeBuild"
+            version = "1"
+            owner = "AWS"
+            input_artifacts = ["tf-code"]
+            configuration = {
+                ProjectName = "tf-cicd-image"
             }
         }
     }
