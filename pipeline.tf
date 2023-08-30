@@ -55,7 +55,7 @@ resource "aws_codebuild_project" "tf-image" {
   description   = "Builds a Docker image and pushes it to ECR"
   build_timeout = 60
   service_role  = aws_iam_role.tf-codebuild-role-terraform.arn
-
+ 
 source {
      type   = "CODEPIPELINE"
      buildspec = file("image-buildspec.yml")
