@@ -51,7 +51,7 @@ resource "aws_codebuild_project" "tf-apply" {
 
 
 resource "aws_codebuild_project" "tf-image" {
-  name          = "tf-image"
+  name          = "tf-cicd-image"
   description   = "Builds a Docker image and pushes it to ECR"
   build_timeout = 60
   service_role  = aws_iam_role.tf-codebuild-role-terraform.arn
