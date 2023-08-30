@@ -13,27 +13,7 @@ resource "aws_iam_role" "tf-codepipeline-role-terraform" {
       "Effect": "Allow",
       "Sid": ""
     }
-  ],
-  [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "ecr:GetAuthorizationToken",
-                "ecr:BatchCheckLayerAvailability",
-                "ecr:GetDownloadUrlForLayer",
-                "ecr:GetRepositoryPolicy",
-                "ecr:DescribeRepositories",
-                "ecr:ListImages",
-                "ecr:DescribeImages",
-                "ecr:BatchGetImage",
-                "ecr:GetLifecyclePolicy",
-                "ecr:GetLifecyclePolicyPreview",
-                "ecr:ListTagsForResource",
-                "ecr:DescribeImageScanFindings"
-            ],
-            "Resource": "*"
-        }
-    ]
+  ]
 }
 EOF
 
@@ -96,7 +76,29 @@ data "aws_iam_policy_document" "tf-cicd-build-policies-terraform" {
         resources = ["*"]
         effect = "Allow"
     }
+      statement{
+        sid = ""
+        actions = [
+                "ecr:GetAuthorizationToken",
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:GetRepositoryPolicy",
+                "ecr:DescribeRepositories",
+                "ecr:ListImages",
+                "ecr:DescribeImages",
+                "ecr:BatchGetImage",
+                "ecr:GetLifecyclePolicy",
+                "ecr:GetLifecyclePolicyPreview",
+                "ecr:ListTagsForResource",
+                "ecr:DescribeImageScanFindings"
+            ]
+        resources = ["*"]
+        effect = "Allow"
+    }
+    
 }
+
+
 
 resource "aws_iam_policy" "tf-cicd-build-policy-terraform" {
     name = "tf-cicd-build-policy-terraform"
