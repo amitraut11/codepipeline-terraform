@@ -13,6 +13,23 @@ resource "aws_iam_role" "tf-codepipeline-role-terraform" {
       "Effect": "Allow",
       "Sid": ""
     }
+  ] ,
+   [
+    ### BEGIN ADDING STATEMENT HERE ###
+    {
+      "Action": [
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:CompleteLayerUpload",
+        "ecr:GetAuthorizationToken",
+        "ecr:InitiateLayerUpload",
+        "ecr:PutImage",
+        "ecr:UploadLayerPart"
+      ],
+      "Resource": "*",
+      "Effect": "Allow"
+    },
+    ### END ADDING STATEMENT HERE ###
+    ...
   ]
 }
 EOF

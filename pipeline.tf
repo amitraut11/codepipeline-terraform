@@ -55,14 +55,22 @@ resource "aws_codebuild_project" "tf-image" {
   service_role  = aws_iam_role.tf-codebuild-role-terraform.arn
 
   artifacts {
-    type = "CODEPIPELINE"
+    type = "NO_ARTIFACTS"
   }
 
   environment {
     compute_type                = "BUILD_GENERAL1_SMALL"
-    image                       = "hashicorp/terraform:1.4.4"
+    image                       = "aws/codebuild/standard:5.0"
     type                        = "LINUX_CONTAINER"
-    image_pull_credentials_type = "SERVICE_ROLE"
+    image_pull_credentials_type = "SERVICE_ROLE" 
+ 
+    environmentVariables{
+        AWS_DEFAULT_REGION = "us-east-1"
+        AWS_ACCOUNT_ID = "365235792173"
+        IMAGE_REPO_NAME = "helloworld"
+        IMAGE_TAG = "latest"
+
+    }
     registry_credential{
         credential = var.dockerhub_credentials
         credential_provider = "SECRETS_MANAGER"
