@@ -65,6 +65,7 @@ source {
     compute_type = "BUILD_GENERAL1_SMALL"
     image        = "aws/codebuild/standard:5.0"  # Docker image with Terraform and other tools
     type         = "LINUX_CONTAINER"
+    privileged_mode = true
     #image_pull_credentials_type = "SERVICE_ROLE"
     environment_variable {
       name  = "DOCKER_REPO"
