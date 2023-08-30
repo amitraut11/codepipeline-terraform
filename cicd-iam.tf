@@ -7,20 +7,33 @@ resource "aws_iam_role" "tf-codepipeline-role-terraform" {
   "Statement": [
     {
       "Action": "sts:AssumeRole",
-       "ecr:BatchCheckLayerAvailability",
-        "ecr:CompleteLayerUpload",
-        "ecr:GetAuthorizationToken",
-        "ecr:InitiateLayerUpload",
-        "ecr:PutImage",
-        "ecr:UploadLayerPart" ,
       "Principal": {
         "Service": "codepipeline.amazonaws.com"
       },
-      "Resource": "*",
       "Effect": "Allow",
       "Sid": ""
     }
-  ] 
+  ],
+  [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ecr:GetAuthorizationToken",
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:GetRepositoryPolicy",
+                "ecr:DescribeRepositories",
+                "ecr:ListImages",
+                "ecr:DescribeImages",
+                "ecr:BatchGetImage",
+                "ecr:GetLifecyclePolicy",
+                "ecr:GetLifecyclePolicyPreview",
+                "ecr:ListTagsForResource",
+                "ecr:DescribeImageScanFindings"
+            ],
+            "Resource": "*"
+        }
+    ]
 }
 EOF
 
