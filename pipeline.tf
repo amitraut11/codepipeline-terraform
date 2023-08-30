@@ -70,7 +70,7 @@ resource "aws_codebuild_project" "source-code-image" {
  }
  source {
      type   = "CODEPIPELINE"
-     buildspec = file("app/image-buildspec.yml")
+     buildspec = file("image-buildspec.yml")
  }
 }
 
