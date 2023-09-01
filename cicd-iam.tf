@@ -1,3 +1,4 @@
+//creatte a role for codepipeline
 resource "aws_iam_role" "tf-codepipeline-role-terraform" {
   name = "tf-codepipeline-role-terraform"
 
@@ -19,7 +20,7 @@ EOF
 
 }
 
-
+//create a policy document for pipeline
 data "aws_iam_policy_document" "tf-cicd-pipeline-policies-terraform" {
     statement{
         sid = ""
@@ -35,6 +36,7 @@ data "aws_iam_policy_document" "tf-cicd-pipeline-policies-terraform" {
     }
 }
 
+// create a policy for codepipeline role
 resource "aws_iam_policy" "tf-cicd-pipeline-policy-terraform" {
     name = "tf-cicd-pipeline-policy-terraform"
     path = "/"
@@ -42,12 +44,13 @@ resource "aws_iam_policy" "tf-cicd-pipeline-policy-terraform" {
     policy = data.aws_iam_policy_document.tf-cicd-pipeline-policies-terraform.json
 }
 
+//attach a codepipeline policy to role
 resource "aws_iam_role_policy_attachment" "tf-cicd-pipeline-attachment" {
     policy_arn = aws_iam_policy.tf-cicd-pipeline-policy-terraform.arn
     role = aws_iam_role.tf-codepipeline-role-terraform.id
 }
 
-
+//create a iam role for codebuild
 resource "aws_iam_role" "tf-codebuild-role-terraform" {
   name = "tf-codebuild-role-terraform"
 
@@ -69,6 +72,7 @@ EOF
 
 }
 
+//create a policy document for codebuild
 data "aws_iam_policy_document" "tf-cicd-build-policies-terraform" {
     statement{
         sid = ""
@@ -99,7 +103,7 @@ data "aws_iam_policy_document" "tf-cicd-build-policies-terraform" {
 }
 
 
-
+//create a policy for codebuild
 resource "aws_iam_policy" "tf-cicd-build-policy-terraform" {
     name = "tf-cicd-build-policy-terraform"
     path = "/"
@@ -107,6 +111,7 @@ resource "aws_iam_policy" "tf-cicd-build-policy-terraform" {
     policy = data.aws_iam_policy_document.tf-cicd-build-policies-terraform.json
 }
 
+//attach policy to codebuild role
 resource "aws_iam_role_policy_attachment" "tf-cicd-codebuild-attachment-terraform11" {
     policy_arn  = aws_iam_policy.tf-cicd-build-policy-terraform.arn
     role        = aws_iam_role.tf-codebuild-role-terraform.id
