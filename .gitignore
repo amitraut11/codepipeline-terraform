@@ -1,2 +1,5 @@
 # ignore ALL .terraform folder
 *.terraform
+*.xml
+.idea/
+
