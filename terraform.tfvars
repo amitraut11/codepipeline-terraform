@@ -15,3 +15,5 @@ application_load_balancer_name = "cc-demo-app-alb"
 target_group_name              = "cc-demo-alb-tg"
 
 demo_app_service_name = "cc-demo-app-service"
+
+ecr_repo_url = "365235792173.dkr.ecr.us-east-1.amazonaws.com/helloworld:latest"
